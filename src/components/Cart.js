@@ -1,5 +1,16 @@
+import { useEffect, useState } from "react";
+
 export default function Cart() {
-    
+    const [total, setTotal] = useState(0)
+
+    useEffect(()=>{
+        let newTotal = 0
+        cart.forEach(({ price }) => {
+            newTotal += price
+        })
+        setTotal(newTotal)
+    },[cart])
+
     return (
         <div className="table-container">
             <h4 className="card-title">Cart</h4>
@@ -11,12 +22,19 @@ export default function Cart() {
                     <td>Price</td>
 
                 </thead>
-                {
-                    
+                {cart && cart.map(({ name, qty, price }, index) => {
+                    return (
+                        <tr key={index}>
+                            <td>{name}</td>
+                            <td>{qty}</td>
+                            <td>{price}</td>
+                        </tr>
+                    )
+                })
                 }
                 <tr>
                     <td >Grand Total : </td>
-                    <td colSpan={2}>Grand Total</td>
+                    <td colSpan={2}>{total}</td>
                 </tr>
             </table>
            
