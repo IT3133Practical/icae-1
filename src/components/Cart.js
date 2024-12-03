@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Cart() {
+export default function Cart({cart}) {
     const [total, setTotal] = useState(0)
 
     useEffect(()=>{

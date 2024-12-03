@@ -1,10 +1,34 @@
 
 import '../assets/CSS/layout.css';
+import { flowers } from './FlowerDB';
+import Product from './Product';
+import Cart from './Cart';
+import { useState } from 'react';
 
+export default function Products() {
+    const [cart, setCart] = useState([])
 
-export default function Products(){
-   
-    return(
+    const addToCart = (product) => {
+        setCart((prev) => {
+            const existingProduct = prev.find((item) => {
+                return (
+                    item.name === product.name
+                )
+            })
+            if (existingProduct) {
+                return prev.map((item) => {
+                    return (
+                        item.name === product.name
+                            ? { ...item, qty: item.qty + product.qty, price: item.price + product.price }
+                            : item
+                    )
+                })
+            }
+            return [...prev, product]
+        })
+    }
+
+    return (
         <>
             <div className="item1">
                 <h1>Flower Shop</h1>
@@ -14,14 +38,22 @@ export default function Products(){
                 <div className="grid-container">
                     {
                         //product
+                        flowers.map(({ name, img, price }, key) => {
+                            return (
+                                <div key={key}>
+                                    <Product name={name} price={price} img={img} addToCart={addToCart} />
+                                </div>
+                            )
+                        })
                     }
                 </div>
 
             </div>
             <div className="item3">
                 {
-                //cart
+                    //cart
                 }
+                 <Cart cart={cart} />
             </div>
         </>
     );

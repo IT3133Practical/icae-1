@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../assets/CSS/layout.css';
 
-export default function Product(){
+export default function Product(props){
     const [quantity, setQuantity] = useState(0)
 
     const handleAddToCart = () => {
